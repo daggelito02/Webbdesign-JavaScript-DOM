@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Uppgift 1 – Sida för mottagning av formulär</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" >
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+	<link rel="stylesheet" href="style/form.css">
+</head>
+<body>
+	<div class="content">
+		<div id="conference-logo">
+			<div class="dot"></div>
+			<div class="half-circle"></div>
+		</div>
+		<h1>Tack för din anmälan</h1>
+		<p>Följande information har registrerats:</p>
+		<p>
+			<b>Namn:</b> <span id="name_display"></span> <br>
+			<b>Organisation:</b> <span id="organisation_display"></span> <br>
+			<b>E-post:</b> <span id="email_display"></span> <br>
+			<b>Presentationstyp:</b> <span id="pres_type_display"></span> <br>
+			<span id="title_opt"><b>Presentationstitel:</b> <span id="title_display"></span> <br></span>
+			<span id="message_opt"><b>Meddelande:</b> <span id="message_display"></span> <br></span>
+		</p>
+		<p>Om informationen ovan är felaktig, kontakta oss på <a href="mailto:info@dotconf.se">info@dotconf.se</a>. 	
+	</div>
+	<script src="scripts/backend.js"></script>
+</body>
+</html>
