@@ -197,7 +197,7 @@ function findCity(cities, name) {
             return cities[i];
         }
     }
-    return "Inen stad med namnet \"" + name + "\" hittades.";
+    return "Ingen stad med namnet \"" + name + "\" hittades.";
 }
 
 
