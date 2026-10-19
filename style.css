@@ -29,6 +29,13 @@ a {
 	color: #0b5fa5;
 }
 
+a[target="_blank"] .external-link-icon {
+	display: inline-block;
+	margin-left: 0.15em;
+	font-size: 0.85em;
+	text-decoration: none;
+}
+
 .back-link {
 	display: inline-block;
 	margin-bottom: 1.5rem;
