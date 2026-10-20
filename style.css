@@ -25,6 +25,12 @@ nav li {
 	margin-bottom: 0.5rem;
 }
 
+.check-icon {
+	margin-right: 0.4em;
+	color: #238636;
+	font-weight: 700;
+}
+
 a {
 	color: #0b5fa5;
 }
