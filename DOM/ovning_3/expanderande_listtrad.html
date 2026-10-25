@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Övning 3 – Expanderande listträd</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" type="text/css" href="css/expand-list-tree.css" />
+</head>
+
+<body>
+    <p class="back-link"><a href="../ovning-3-expanderande-listtrad.html">← Tillbaka till övning 3</a></p>
+	<h1>Övning 3 – Expanderande listträd</h1>
+
+    <div class="content">
+        <h1>Expanderande listträd</h1>
+        <ul id="expand-list-tree">
+            <li>
+                <a href="#">Länk 1, nivå 1</a>
+                <ul>
+                    <li>
+                        <a href="#">Länk 1, nivå 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Länk 2, nivå 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Länk 3, nivå 2</a>
+                        <ul>
+                            <li>
+                                <a href="#">Länk 1, nivå 3</a>
+                            </li>
+                            <li>
+                                <a href="#">Länk 2, nivå 3</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Länk 4, nivå 2</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Länk 2, nivå 1</a>
+                <ul>
+                    <li>
+                        <a href="#">Länk 1, nivå 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Länk 2, nivå 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Länk 3, nivå 2</a>
+                        <ul>
+                            <li>
+                                <a href="#">Länk 1, nivå 3</a>
+                            </li>
+                            <li>
+                                <a href="#">Länk 2, nivå 3</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Länk 4, nivå 2</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Länk 3, nivå 1</a>
+                <ul>
+                    <li>
+                        <a href="#">Länk 1, nivå 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Länk 2, nivå 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Länk 3, nivå 2</a>
+                        <ul>
+                            <li>
+                                <a href="#">Länk 1, nivå 3</a>
+                            </li>
+                            <li>
+                                <a href="#">Länk 2, nivå 3</a>
+                                <ul>
+                                    <li>
+                                        <a href="#">Länk 1, nivå 4</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Länk 2, nivå 4</a>
+                                        <ul>
+                                            <li>
+                                                <a href="#">Länk 1, nivå 5</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Länk 3, nivå 4</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Länk 4, nivå 2</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Länk 4, nivå 1</a>
+            </li>
+        </ul>
+    </div>
+    <script src="js/expand-list-tree.js"></script>
+</body>
+
+</html>

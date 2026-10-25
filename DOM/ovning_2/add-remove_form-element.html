@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Övning 2 – Lägga till och ta bort formulärelement</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <p class="back-link"><a href="../ovning-2-formularelement.html">← Tillbaka till övning 2</a></p>
+    <h1 class="display-4">Övning 2 – Lägga till och ta bort formulärelement</h1>
+    <div class="container">
+        <div class="jumbotron">
+            <h2 class="text-muted">Variabel sökning</h2>
+            <form id="search-form">
+                <fieldset id="search-fields">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Sökord">
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    <button type="submit" id="search" class="btn btn-primary">Sök</button>
+                    <button id="add-search-field" class="btn btn-secondary">Lägg till ett sökfält</button>
+                </div>
+            </form>
+            <hr class="my-4">
+            
+            <h2 class="text-muted">Sökhistorik</h2>
+            <ul id="search-list" class="list-group">
+                <!-- Här ska söksträngarna läggas till via JavaScript -->
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript" src="variable-search.js"></script>
+</body>
+
+</html>
