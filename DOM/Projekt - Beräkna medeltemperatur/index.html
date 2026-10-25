@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperaturer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/temperature.css">
+</head>
+
+<body>
+    <div class="app">
+        <h1>Temperaturer</h1>
+        <div class="controls">
+            <label class="controls-label" for="min-temp">
+                Markera städer med temperaturvärden som är större än eller lika med:
+            </label>
+            <div class="controls-actions">
+                <div class="input-group">
+                    <input id="min-temp" type="number" placeholder="0" />
+                    <span class="input-suffix">°C</span>
+                </div>
+                <button id="show-value">Visa markering</button>
+                <button id="clear-formatting" class="secondary">Rensa formatering</button>
+            </div>
+        </div>
+        <table id="temperature-table">
+            <thead>
+                <tr>
+                    <th>Stad</th>
+                    <th>Avläsning 1</th>
+                    <th>Avläsning 2</th>
+                    <th>Avläsning 3</th>
+                    <th>Avläsning 4</th>
+                    <th>Avläsning 5</th>
+                    <th>Medeltemperatur</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="city">London</td>
+                    <td>6</td>
+                    <td>18</td>
+                    <td>12</td>
+                    <td>22</td>
+                    <td>23</td>
+                    <td class="average-temp"></td>
+                </tr>
+                <tr>
+                    <td class="city">Paris</td>
+                    <td>24</td>
+                    <td>25</td>
+                    <td>18</td>
+                    <td>19</td>
+                    <td>17</td>
+                    <td class="average-temp"></td>
+                </tr>
+                <tr>
+                    <td class="city">Stockholm</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>13</td>
+                    <td>7</td>
+                    <td>5</td>
+                    <td class="average-temp"></td>
+                </tr>
+                <tr>
+                    <td class="city">Madrid</td>
+                    <td>34</td>
+                    <td>27</td>
+                    <td>23</td>
+                    <td>33</td>
+                    <td>39</td>
+                    <td class="average-temp"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="js/temperature.js"></script>
+</body>
+
+</html>

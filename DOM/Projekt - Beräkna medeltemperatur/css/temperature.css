@@ -1,0 +1,226 @@
+/* ─── Design tokens ───────────────────────────────────────────────── */
+:root {
+    --blue-50:  #eff6ff;
+    --blue-100: #dbeafe;
+    --blue-600: #2563eb;
+    --blue-700: #1d4ed8;
+    --gray-50:  #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-500: #64748b;
+    --gray-800: #1e293b;
+    --red-600:  #dc2626;
+    --orange-50: #fff7ed;
+    --white:    #ffffff;
+
+    --radius-sm: 0.5rem;
+    --radius:    0.75rem;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow:    0 1px 3px 0 rgb(0 0 0 / 0.10), 0 1px 2px -1px rgb(0 0 0 / 0.10);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.10), 0 2px 4px -2px rgb(0 0 0 / 0.10);
+}
+
+/* ─── Base ────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    background: var(--gray-100);
+    color: var(--gray-800);
+    margin: 0;
+    padding: 2.5rem 1.25rem;
+    min-height: 100vh;
+}
+
+/* ─── App wrapper ─────────────────────────────────────────────────── */
+.app {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem 0;
+}
+
+/* ─── Controls card ───────────────────────────────────────────────── */
+.controls {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.controls-label {
+    font-size: 0.875rem;
+    color: var(--gray-500);
+}
+
+.controls-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+}
+
+/* ─── Input group (input + °C suffix) ────────────────────────────── */
+.input-group {
+    display: inline-flex;
+    align-items: stretch;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    background: var(--gray-50);
+    overflow: hidden;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.input-group:focus-within {
+    border-color: var(--blue-600);
+    box-shadow: 0 0 0 3px var(--blue-100);
+    background: var(--white);
+}
+
+input[type="number"] {
+    width: 3.75rem;
+    padding: 0.4rem 0.25rem 0.4rem 0.625rem;
+    border: none;
+    background: transparent;
+    font-size: 0.875rem;
+    font-family: inherit;
+    color: var(--gray-800);
+    outline: none;
+}
+
+/* Dölj spinner-pilarna */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.input-suffix {
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem 0 0.125rem;
+    font-size: 0.8125rem;
+    color: var(--gray-400);
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────────── */
+button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+}
+
+#show-value {
+    background: var(--blue-600);
+    color: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+#show-value:hover {
+    background: var(--blue-700);
+    box-shadow: var(--shadow);
+}
+
+button.secondary {
+    background: var(--white);
+    color: var(--gray-500);
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
+}
+
+button.secondary:hover {
+    background: var(--gray-50);
+    color: var(--gray-800);
+}
+
+/* ─── Table ───────────────────────────────────────────────────────── */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+thead tr {
+    background: var(--blue-600);
+    color: var(--white);
+}
+
+th {
+    padding: 0.75rem 1rem;
+    text-align: center;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+th:first-child {
+    text-align: left;
+}
+
+td {
+    padding: 0.625rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 0.9375rem;
+    color: inherit;
+}
+
+td.city {
+    text-align: left;
+    font-weight: 500;
+    font-style: normal;
+}
+
+td.average-temp {
+    font-weight: 600;
+    color: var(--blue-600);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background: var(--gray-50);
+}
+
+/* ─── Highlighted states ──────────────────────────────────────────── */
+tr.markedRow td {
+    background: var(--orange-50);
+}
+
+td.markedCell {
+    font-weight: 700;
+    color: var(--red-600);
+}
