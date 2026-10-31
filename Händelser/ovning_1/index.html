@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Övning 1 - Hantera användarinteraktion</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <link rel="stylesheet" href="style/form.css">
+    <link rel="stylesheet" href="../../style.css">
+</head>
+
+<body>
+    <p class="back-link"><a href="../ovning-1-anvandarinteraktion.html">← Tillbaka till övning 1</a></p>
+    <div class="content">
+        <h1>Feedback</h1>
+        <form id="comment-form" class="pure-form pure-form-stacked" method="get" action="dummy.html">
+            <label for="comment">Skriv din kommentar nedan (max 250 tecken)</label>
+            <textarea id="comment" name="comment" cols="50" rows="4" maxlength="250"></textarea>
+            <div id="num-chars-display"><b>Antal tecken:</b> <span id="num-chars">0</span></div>
+            <button type="submit" id="send-comment" name="send-comment" class="pure-button pure-button-primary">Skicka kommentar</button>
+        </form>
+    </div>
+    <!--END .content-->
+    <script src="scripts/feedback.js"></script>
+</body>
+
+</html>

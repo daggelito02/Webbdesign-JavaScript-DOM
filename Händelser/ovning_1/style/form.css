@@ -1,0 +1,48 @@
+body {
+	background: #f6f6f6;
+}
+
+body, label {
+	font-family: "Open Sans", sans-serif;
+	font-weight: 300;
+}
+
+img {
+	display: block;
+	margin: 0 auto;
+}
+
+h1 {
+	text-align: center;
+}
+
+.content {
+	background: white;
+	max-width: 640px;
+	margin: 0 auto;
+	padding: 3em;
+}
+
+form {
+    position: relative;
+}
+
+textarea {
+    width: 100%;
+}
+
+#num-chars-display {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#num-chars.warning {
+    color: red;
+}
+
+#comment-display {
+    background-color: azure;
+    border: 1px solid lightblue;
+    padding: 20px;
+}
