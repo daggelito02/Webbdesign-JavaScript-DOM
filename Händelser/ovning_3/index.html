@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Råvarufilter</title>
+    <link rel="stylesheet" href="css/filter.css">
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+    <p class="back-link"><a href="../ovning-3-handelsedelegering.html">← Tillbaka till övning 2</a></p>
+    
+    <h1>Råvaror</h1>
+
+    <div id="filterknappar">
+        <button data-filter="alla" class="aktiv">Alla</button>
+        <button data-filter="frukt">Frukt</button>
+        <button data-filter="gronsak">Grönsak</button>
+        <button data-filter="bar">Bär</button>
+    </div>
+
+    <ul id="produkter">
+        <li data-kategori="frukt">Äpple</li>
+        <li data-kategori="gronsak">Broccoli</li>
+        <li data-kategori="frukt">Päron</li>
+        <li data-kategori="bar">Jordgubbe</li>
+        <li data-kategori="gronsak">Morot</li>
+        <li data-kategori="bar">Blåbär</li>
+        <li data-kategori="frukt">Mango</li>
+        <li data-kategori="gronsak">Spenat</li>
+    </ul>
+
+    <script src="scripts/filter.js"></script>
+</body>
+</html>
