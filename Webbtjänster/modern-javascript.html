@@ -9,6 +9,271 @@
 <body>
 	<p class="back-link"><a href="index.html">← Till Tema 5</a></p>
 	<h1>Modern JavaScript (ES6+)</h1>
-	<p><a href="https://www.canvas.umu.se/courses/22826/modules/items/933410" target="_blank" rel="noopener noreferrer">Öppna sidan i Canvas <span aria-hidden="true" class="external-link-icon">↗</span></a></p>
+	<p>
+		<a href="https://www.canvas.umu.se/courses/22826/modules/items/933410" 
+		target="_blank" rel="noopener noreferrer">Öppna sidan i Canvas 
+			<span aria-hidden="true" class="external-link-icon">↗</span>
+		</a>
+	</p>
+
+	<h2>Exempel på användning av ES6-funktioner</h2>
+	<div id="container"></div>
+	<button id="button">Klicka på mig</button>
+	<script>
+		//Del 1 – Pilfunktioner (arrow functions)
+		//Jämförelse mellan gammal och ny syntax
+		// Traditionell funktion
+		function hello(name) {
+			return "Hej " + name + "!";
+		}
+
+		// Arrow function
+		const hello2 = (name) => {
+			return "Hej " + name + "!";
+		}
+
+		// Ännu kortare för enkla uttryck
+		const greet = name => "Hej " + name + "!";
+
+		// Flera parametrar kräver parenteser
+		const addition = (a, b) => a + b;
+
+		// Inga parametrar
+		const randomNumber = () => Math.random();
+
+		// Enkel parameter behöver inte parenteser
+		const timesTwo = x => x * 2;
+
+		// Flera rader kräver måsvingar och return
+		const complexComputation = (x, y) => {
+			const result = x * y + 10;
+			console.log("Beräknar:", result);
+			return result;
+		};
+		complexComputation(5, 3); // Exempelanrop
+
+		// Array-metoder blir mycket renare
+		const numbers = [1, 2, 3, 4, 5];
+
+		// Här vill vi ta alla nummer i arrayen och multiplicera dem med 2:
+		// Gammal syntax
+		const doubled = numbers.map(function(n) {
+			return n * 2;
+		});
+
+		// Modern syntax
+		const doubled2 = numbers.map(n => n * 2);
+
+		// Händelsehanterare
+		document.getElementById('button').addEventListener('click', () => {
+			console.log('Knapp klickad!');
+		});
+
+		// Del 2 – Mallsträngar (template literals)
+		// Grundläggande användning
+		const name = "Anna";
+		const age = 25;
+
+		// Gammal syntax (krånglig)
+		const message = "Hej " + name + "! Du är " + age + " år gammal.";
+
+		// Modern syntax (tydlig)
+		const message2 = `Hej ${name}! Du är ${age} år gammal.`;
+
+		// Fungerar med uttryck också
+		const nextYear = `Nästa år blir du ${age + 1} år.`;
+
+		
+		//Strängar med multipla rader
+		// Perfekt för HTML-strängar
+		const userCard = `
+			<div class="user-card">
+				<h2>${name}</h2>
+				<p>Ålder: ${age}</p>
+				<p>Ålder nästa år: ${age + 1}</p>
+				<p>E-post: ${name.toLowerCase()}@example.com</p>
+			</div>
+		`;
+
+		document.getElementById('container').innerHTML = userCard;
+
+		// Del 3 – Destrukturering (Destructuring)
+		// Objekt-destrukturering
+		const user = {
+			name: "Erik",
+			age: 30,
+			email: "erik@example.com",
+			city: "Stockholm"
+		};
+
+		// Gammal syntax
+		//const name = user.name;
+		//const age = user.age;
+		const email = user.email;
+
+		// Modern syntax
+		const { name: destructuredName, age: destructuredAge, email: destructuredEmail } = user;
+
+		// Med nya variabelnamn
+		const { name: userName, age: userAge } = user;
+
+		// Med fallback-värden
+		const { name: nameWithFallback, age: ageWithFallback, country = "Sverige" } = user;
+		
+		// Array-destrukturering
+		const colors = ["röd", "grön", "blå"];
+
+		// Gammal syntax
+		const firstColor = colors[0];
+		const secondColor = colors[1];
+
+		// Modern syntax
+		const [firstColorModern, secondColorModern, thirdColor] = colors;
+
+		// Hoppa över element
+		const [firstColorSkipping, , thirdColorSkipping] = colors; // hoppar över "grön"
+
+		// Med fallback-värden
+		const [firstColorWithFallback, secondColorWithFallback, thirdColorWithFallback, fourthColor = "gul"] = colors;
+
+		// Del 4 – Spread-operatorn (...)
+		
+		// ... för arrayer
+		const fruits = ["äpple", "banan"];
+		const vegetables = ["morot", "spenat"];
+
+		// Kombinera arrays
+		const food = [...fruits, ...vegetables];
+		console.log(food); // ["äpple", "banan", "morot", "spenat"]
+
+		// Kopiera en array
+		const moreFruits = [...fruits, "orange", "kiwi"];
+
+		// Skicka array-element som separata argument
+		const numbersx = [1, 2, 3];
+		console.log(Math.min(...numbersx)); // istället för Math.max(1, 2, 3)
+
+		// ... för objekt
+		const defaultPerson = {
+			name: "Okänd",
+			age: 0
+		};
+
+		const user2= {
+			...defaultPerson,
+			name: "Lisa", // skriver över defaultPerson.name
+			email: "lisa@example.com"
+		};
+
+		console.log(user2);
+		// { name: "Lisa", age: 0, email: "lisa@example.com" }
+
+		// Uppdatera objekt utan att ändra originalet
+		const updatedUser = {
+			...user2,
+			age: 25
+		};
+
+		console.log(updatedUser);
+
+		// Exempel: Konfigurationsobjekt
+		const defaultSettings = {
+			theme: "ljus",
+			language: "svenska",
+			notifications: true
+		};
+
+		function updateSettings(newSettings) {
+			return {
+				...defaultSettings,
+				...newSettings
+			};
+		}
+
+		const userSettings = updateSettings({
+			theme: "mörk",
+			notifications: false
+		});
+		// Resultat: { theme: "mörk", language: "svenska", notifications: false }
+
+		console.log(userSettings);
+
+		// Del 5 – Standardparametrar (Default parameters)
+		// Gammal syntax (krånglig)
+		function greet1(name) {
+			if (!name) {
+				name = "Vän";
+			}
+			return "Hej " + name + "!";
+		}
+
+		// Modern syntax (elegant)
+		function greet2(name = "Vän") {
+			return `Hej ${name}!`;
+		}
+
+		// Fungerar med arrow functions också
+		const calculateDiscount = (price, discount = 0.1) => price * (1 - discount);
+
+		console.log(calculateDiscount(100));     // 90 (10% rabatt)
+		console.log(calculateDiscount(100, 0.2)); // 80 (20% rabatt)
+
+		// Avancerade standardparametrar
+		// Standardparametrar kan vara hela uttryck
+		function logWithTime(message, time = new Date().toLocaleTimeString()) {
+			console.log(`[${time}] ${message}`);
+		}
+
+		// Standardparametrar kan använda värdet hos parametrar som ligger tidigare i parameterlistan
+		function createUser(name, username = name.toLowerCase()) {
+			return { name, username };
+		}
+
+		console.log(createUser("Anna Svensson"));
+		// { name: "Anna Svensson", username: "anna svensson" }
+
+		// Del 6 – Fördjupning kring let och const
+		// Block scope kontra function scope
+
+		// var är function-scoped
+		function exampleVar() {
+			if (true) {
+				var x = 1;
+			}
+			console.log(x); // 1 - fungerar!
+		}
+
+		// let är block-scoped
+		function exampleLet() {
+			if (true) {
+				let y = 1;
+			}
+			console.log(y); // ReferenceError: y is not defined
+		}
+
+		// Praktiskt exempel: loopar
+		for (var i = 0; i < 3; i++) {
+			setTimeout(() => console.log("var:", i), 100); // "var: 3" tre gånger
+		}
+
+		for (let j = 0; j < 3; j++) {
+			setTimeout(() => console.log("let:", j), 100); // "let: 0", "let: 1", "let: 2"
+		}
+
+		// Const och immutabilitet
+		// const förhindrar omtilldelning, inte mutation (förändring)
+		const user11 = { name: "Anna" };
+		user11.name = "Berit"; // OK - ändrar objektets innehåll
+		// user11 = {}; // Error - försöker tilldela nytt värde
+
+		const colors22 = ["röd", "grön"];
+		colors22.push("blå"); // OK - ändrar arrayens innehåll
+		// colors22 = []; // Error - försöker tilldela ny array
+
+		// För verklig immutabilitet, använd Object.freeze()
+		const immutableObject = Object.freeze({ name: "Anna" });
+		// immutableObject.name = "Berit"; // Fungerar inte i fruset tillstånd och kommer att ge ett felmeddelande i "strict mode"
+
+	</script>
 </body>
 </html>

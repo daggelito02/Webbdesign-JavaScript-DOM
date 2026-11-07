@@ -9,6 +9,83 @@
 <body>
 	<p class="back-link"><a href="index.html">← Till Tema 5</a></p>
 	<h1>Exempel 1 – AJAX med Fetch API och JSON</h1>
-	<p><a href="https://www.canvas.umu.se/courses/22826/modules/items/933413" target="_blank" rel="noopener noreferrer">Öppna sidan i Canvas <span aria-hidden="true" class="external-link-icon">↗</span></a></p>
+	<p>
+		<a href="https://www.canvas.umu.se/courses/22826/modules/items/933413" 
+		target="_blank" 
+		rel="noopener noreferrer">
+		Öppna sidan i Canvas 
+		<span aria-hidden="true" class="external-link-icon">↗</span>
+		</a>
+	</p>
+	<h2>Övning</h2>
+	<h3>Statisk lista med JSON</h3>
+	<ul id="personlista-statisk">
+
+	</ul>
+	<script>
+		const data = {"personer":[
+			{
+				"fnamn":"RACHELLE",
+				"enamn":"ZWIEFELHOFER",
+				"epost":"rachelle.zwiefelhofer@somefakedomain.nu"
+			},
+			{
+				"fnamn":"RACQUEL",
+				"enamn":"JOH",
+				"epost":"racquel.joh@somefakedomain.nu"
+			},
+			{
+				"fnamn":"RAE",
+				"enamn":"BRAVARD",
+				"epost":"rae.bravard@somefakedomain.nu"
+			},
+			{
+				"fnamn":"RAFAEL",
+				"enamn":"SAGASTUME",
+				"epost":"rafael.sagastume@somefakedomain.nu"
+			},
+			{
+				"fnamn":"RAISA",
+				"enamn":"REINES",
+				"epost":"raisa.reines@somefakedomain.nu"
+			}
+		]};
+
+		const personArray = data.personer;
+		const personList = document.getElementById('personlista-statisk');
+		
+		for(let i=0; i < personArray.length; i++) {
+			const person = personArray[i];
+			const listItem = document.createElement('li');
+			listItem.textContent = person.fnamn;
+			personList.appendChild(listItem);
+		}
+	</script>
+	<h3>Hämta listan med personer från API</h3>
+	<ul id="personlista-api"></ul>
+    <script>
+        // Modern Fetch API approach
+        const params = new URLSearchParams({ limit: 10, name: 'ba' });
+        fetch(`https://webservice.informatik.umu.se/webservice_persondb/persondb.php?${params}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Anslutningen till webbtjänsten misslyckades');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const personArray = data.personer;
+                const personlista = document.getElementById('personlista-api');
+                for (let i = 0; i < personArray.length; i++) {
+                    const person = personArray[i];
+                    const listItem = document.createElement('li');
+                    listItem.textContent = person.fnamn;
+                    personlista.appendChild(listItem);
+                }
+            })
+            .catch(error => {
+                console.error('Fel vid hämtning av data:', error);
+            });
+    </script>
 </body>
 </html>

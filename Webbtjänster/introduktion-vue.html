@@ -5,10 +5,161 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Introduktion till ramverket Vue.js (Bonus)</title>
 	<link rel="stylesheet" href="../style.css">
+	<!-- <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css"> -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
 	<p class="back-link"><a href="index.html">← Till Tema 5</a></p>
 	<h1>Introduktion till ramverket Vue.js (Bonus)</h1>
-	<p><a href="https://www.canvas.umu.se/courses/22826/modules/items/933411" target="_blank" rel="noopener noreferrer">Öppna sidan i Canvas <span aria-hidden="true" class="external-link-icon">↗</span></a></p>
+	<p>
+		<a href="https://www.canvas.umu.se/courses/22826/modules/items/933411" 
+		target="_blank" rel="noopener noreferrer">Öppna sidan i Canvas 
+		<span aria-hidden="true" class="external-link-icon">↗</span>
+		</a>
+	</p>
+	<h2>Övning 1: En enkel räknare</h2>
+	<div id="app">
+		<h3>Räknare: {{ counter }}</h3>
+		<button @click="counter++">+</button>
+		<button @click="counter--">-</button>
+	</div>
+
+	<h2>Övning 2: Visa data med Vue</h2>
+		<div id="app-info">
+		<!-- Textinterpolation -->
+		<p>{{ message }}</p>
+		
+		<!-- Rendering med villkor -->
+		<p v-if="visible">Detta syns bara om visible är true</p>
+		
+		<!-- Loopar -->
+		<ul>
+			<li v-for="product in products" :key="product">
+				{{ product }}
+			</li>
+		</ul>
+		
+		<!-- Händelsehantering -->
+		<button @click="visible = !visible">
+			{{ visible ? 'Dölj' : 'Visa' }} meddelande
+		</button>
+	</div>
+
+	<h2>Övning 3: Att-göra-lista</h2>
+
+	<div id="todo-app">
+		<h3>Min att-göra-lista</h3>
+		
+		<!-- Formulär för att lägga till nya uppgifter -->
+		<form @submit.prevent="addTask">
+			<input 
+				v-model="newTask" 
+				placeholder="Vad ska du göra?" 
+				required
+			>
+			<button type="submit">Lägg till</button>
+		</form>
+		
+		<!-- Lista med uppgifter -->
+		<ul>
+			<li v-for="task in tasks" :key="task.id">
+				<input 
+					type="checkbox" 
+					v-model="task.completed"
+					:id="'task-' + task.id"
+				>
+				<label 
+					:for="'task-' + task.id"
+					:style="{ textDecoration: task.completed ? 'line-through' : 'none' }"
+				>
+					{{ task.text }}
+				</label> 
+				&nbsp; <!-- Ger ett mellanrum mellan texten och knappen -->
+				<button @click="removeTask(task.id)">Ta bort</button>
+			</li>
+		</ul>
+		
+		<!-- Statistik -->
+		<p>
+			{{ completedCount }} av {{ tasks.length }} uppgifter klara
+		</p>
+	</div>
+
+	<script>
+		const { createApp } = Vue;
+
+		createApp({
+			data() {
+				return {
+					counter: 0
+				};
+			}
+		}).mount('#app');
+
+		createApp({
+			data() {
+				return {
+					message: 'Hej Vue.js!',
+					visible: true,
+					user: {
+						name: 'Anna',
+						age: 25
+					},
+					products: ['Äpple', 'Banan', 'Citron']
+				};
+			}
+		}).mount('#app-info');
+
+		const { createApp2 } = Vue;
+
+	createApp({
+		data() {
+			return {
+				newTask: '',
+				tasks: [
+					{ id: 1, text: 'Lär dig Vue.js', completed: false },
+					{ id: 2, text: 'Bygg en app', completed: false }
+				]
+			};
+		},
+		
+		computed: {
+			// Computed properties uppdateras automatiskt när beroende data ändras
+			completedCount() {
+				return this.tasks.filter(task => task.completed).length;
+			}
+		},
+		
+		methods: {
+			addTask() {
+				if (this.newTask.trim()) {
+					this.tasks.push({
+						id: Date.now(), // Enkel ID-generering
+						text: this.newTask.trim(),
+						completed: false
+					});
+					this.newTask = ''; // Rensa formuläret
+				}
+			},
+			
+			removeTask(id) {
+				const index = this.tasks.findIndex(task => task.id === id);
+				if (index > -1) {
+					this.tasks.splice(index, 1);
+				}
+			}
+		}
+	}).mount('#todo-app');
+
+	// En knappkomponent
+	app.component('custom-button', {
+		props: ['text', 'color'],
+		template: `
+			<button :style="{ backgroundColor: color }" @click="$emit('click')">
+				{{ text }}
+			</button>
+		`
+	});
+	</script>
 </body>
 </html>

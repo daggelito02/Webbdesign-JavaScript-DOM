@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Arbetsplan – formulärvalidering</title>
+	<style>
+		:root {
+			color-scheme: light;
+			font-family: system-ui, sans-serif;
+			line-height: 1.6;
+			color: #202a35;
+			background: #f3f6f8;
+		}
+
+		body {
+			max-width: 820px;
+			margin: 2rem auto;
+			padding: 0 1rem;
+		}
+
+		main {
+			padding: 1.5rem;
+			background: #fff;
+			border-radius: 12px;
+			box-shadow: 0 4px 18px #172b4d12;
+		}
+
+		h1, h2 {
+			line-height: 1.25;
+			color: #173b57;
+		}
+
+		li {
+			margin-block: 0.6rem;
+		}
+
+		.note {
+			padding: 0.8rem 1rem;
+			border-left: 4px solid #2878a8;
+			background: #edf7fc;
+		}
+	</style>
+</head>
+<body>
+	<main>
+		<h1>Arbetsplan: validera konferensformuläret</h1>
+		<p>En steg-för-steg-plan för att själv bygga lösningen med vanlig JavaScript.</p>
+
+		<h2>1. Bekanta dig med formuläret</h2>
+		<ul>
+			<li>Öppna <code>konferens/index.html</code> och hitta formuläret med id <code>registration_form</code>.</li>
+			<li>Notera fältens id:n: <code>field_firstname</code>, <code>field_lastname</code>, <code>field_email</code>, <code>field_organisation</code>, <code>field_pres_title</code> och <code>field_message</code>.</li>
+			<li>Notera radioknapparnas namn <code>pres_type</code> och värdena <code>lecture</code>, <code>seminar</code> och <code>discussion</code>.</li>
+		</ul>
+
+		<h2>2. Börja med formulärets submit-händelse</h2>
+		<ul>
+			<li>I <code>validate.js</code>, hämta formuläret med <code>document.getElementById</code>.</li>
+			<li>Lägg till en <code>submit</code>-händelsehanterare med <code>addEventListener</code>.</li>
+			<li>Inuti hanteraren samlar du eventuella fel. Stoppa formuläret med <code>event.preventDefault()</code> när det finns fel. Om inga fel finns ska formuläret få skickas normalt.</li>
+		</ul>
+
+		<h2>3. Läs och kontrollera kontaktuppgifterna</h2>
+		<ul>
+			<li>Läs värdet från vart och ett av de fyra kontaktfälten och använd <code>trim()</code> så att blanksteg inte räknas som innehåll.</li>
+			<li>Kontrollera förnamn, efternamn, e-post och organisation var för sig. Lägg till ett tydligt felmeddelande för varje tomt fält.</li>
+			<li>Kontrollera sedan e-postadressen med det reguljära uttryck som står i uppgiften. Ett tomt e-postfält ska redan fångas av kontrollen för obligatoriska fält.</li>
+		</ul>
+
+		<h2>4. Kontrollera de valfria och villkorliga fälten</h2>
+		<ul>
+			<li>Meddelandet är valfritt: ett tomt meddelande ska godkännas.</li>
+			<li>Om meddelandet innehåller text, kontrollera att längden inte överstiger 200 tecken. Använd egenskapen <code>length</code>.</li>
+			<li>Ta reda på vilken presentationstyp som är vald. Om värdet är <code>lecture</code> eller <code>seminar</code> måste titeln innehålla något annat än blanksteg.</li>
+			<li>Om typen är <code>discussion</code> behöver titeln inte fyllas i.</li>
+		</ul>
+
+		<h2>5. Ge användaren återkoppling</h2>
+		<ul>
+			<li>Börja enkelt med att samla alla fel i en lista och visa dem tillsammans, till exempel med ett <code>alert</code>.</li>
+			<li>Visa felmeddelandet och stoppa inskickningen om listan innehåller minst ett fel.</li>
+			<li>Kontrollera att ett giltigt formulär skickas vidare till <code>dummy-backend.html</code>.</li>
+		</ul>
+
+		<h2>6. Testa systematiskt</h2>
+		<ul>
+			<li>Skicka helt tomt formulär: kontaktfälten ska ge fel.</li>
+			<li>Prova en felaktig e-postadress och sedan en adress som följer formatet i uppgiften.</li>
+			<li>Prova Föreläsning och Seminarium med tom titel, och Diskussion med tom titel.</li>
+			<li>Prova tomt meddelande, ett meddelande med exakt 200 tecken och ett med 201 tecken.</li>
+			<li>Skicka till sist in ett helt giltigt formulär och kontrollera att det går vidare.</li>
+		</ul>
+
+		<p class="note"><strong>Arbetssätt:</strong> Gör en liten kontroll i taget och testa den innan du fortsätter. Lämna endast in <code>validate.js</code> enligt uppgiften; den här plansidan är ett eget arbetsstöd.</p>
+	</main>
+</body>
+</html>
