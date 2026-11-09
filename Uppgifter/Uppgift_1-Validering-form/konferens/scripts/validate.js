@@ -1,82 +1,117 @@
-/* Validerar formulärets xxxx */
+/* Validera formulär */
 
 var conferenceRegForm = document.getElementById("registration_form");
 conferenceRegForm.addEventListener("submit", validate, false);
 
 function validate(e) {
-    let valid = true;
 
-    const inputFirstname = document.getElementById("field_firstname");
-    const firstnameFalse = validateName(inputFirstname.value, "förnamn");
+    //Skapa en lista med alla fält som ska valideras.
+    const fields = [
+        { id: "field_firstname", name: "förnamn",  validate: validateName },
+        { id: "field_lastname",  name: "efternamn", validate: validateName },
+        { id: "field_organisation", name: "organisationsnamn", validate: validateName },
+        { id: "field_email", name: "epostadress", validate: validateEmail },
+    ];
 
-    showError(inputFirstname, firstnameFalse);
-
-    if (firstnameFalse) {
-        valid = false;
-        inputFirstname.focus();
+    // Om användaren har valt ”Föreläsning” eller ”Seminarium” som presentationstyp
+    // måste även fältet ”Titel på föreläsning/seminarium” vara ifyllt. 
+    const presentationType = document.querySelector('input[name="pres_type"]:checked').value;
+    if (presentationType === "lecture" || presentationType === "seminar") {
+        fields.push({ id: "field_pres_title", name: "titel på föreläsning/seminarium", validate: validateRequired });
     }
 
-    const inputLastname = document.getElementById("field_lastname");
-    const lastnameFalse = validateName(inputLastname.value, "efternamn");
+    // Meddelandet läggs sist, efter titeln, så att det följer ordningen i formuläret
+    fields.push({ id: "field_message", name: "meddelande", validate: validateMessage });
 
-    showError(inputLastname, lastnameFalse);
+    // Samla alla valideringsfel i en lista
+    const messageList = [];
+    let setFocusFirstElement= null;
 
-    if (lastnameFalse) {
-        valid = false;
-        inputLastname.focus();
+    // Lopa över felen
+    for (const field of fields) {
+        const inputElement = document.getElementById(field.id);
+        const validateMessage = field.validate(inputElement.value, field.name);
+
+        // Spara första felet som får focus efter alert-medelandet
+        if (validateMessage) {
+            messageList.push(validateMessage);
+            if (!setFocusFirstElement) {
+                setFocusFirstElement = inputElement;
+            }
+        }
     }
 
-    const inputEmail =document.getElementById("field_email");
-    const emailFalse = validateName(inputEmail.value, "epostadress");
-
-    showError(inputEmail, emailFalse);
-
-    if (emailFalse) {
-        valid = false;
-        inputEmail.focus();
-    }
-
-    if (!valid) {
+    if (messageList.length > 0) {
         e.preventDefault();
+        alert("Rätta fel(en):\n- " + messageList.join("\n- "));
+        setFocusFirstElement.focus();
     }
 }
 
 function validateName(value, fieldName) {
+    console.log("validateName: " + value + ", " + fieldName);
+
+    // Ta bort mellanslag, tab mm
     const name = value.trim();
+
+    // Ändra första bokstaven till stor in ordert kommer först i meningen
+    const fieldNameFirst = fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
 
     if (name.length === 0) {
         return `Du behöver skriva ett ${fieldName}`;
     }
 
     if (name.length < 2) {
-        return `${fieldName} måste ha minst två bokstäver`;
+        return `${fieldNameFirst} måste ha minst två bokstäver`;
     }
 
-    if (!/^[A-Za-zÅÄÖåäö]+$/.test(name)) { 
-        return `${fieldName} får bara innehålla bokstäverna A–Ö`;
+    if (!/^[A-Za-zÅÄÖåäö]+$/.test(name)) { // Hittade regex på https://stackoverflow.com/questions/12018245/regex-to-allow-only-letters-a-z-and-space
+        return `${fieldNameFirst} får bara innehålla bokstäverna A–Ö`;
     }
 
     return "";
 }
 
-function showError(inputElement, message) {
-    // Hitta label som hör till fältet
-    const label = document.querySelector(`label[for="${inputElement.id}"]`);
+function validateEmail(value, fieldName) {
 
-    // Ta bort ett tidigare felmeddelande så att de inte staplas
-    const old = label.nextElementSibling;
-    if (old && old.classList.contains("error-message")) {
-        old.remove();
+    // Ta bort mellanslag, tab mm
+    const email = value.trim();
+
+    // Ändra första bokstaven till stor in ordert kommer först i meningen
+    const fieldNameFirst = fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
+
+    if (email.length === 0) {
+        return `Du behöver skriva en ${fieldName}`;
     }
 
-    // Inget fel: avsluta här
-    if (!message) {
-        return;
+    const pattern = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!pattern.test(email)) {
+        return `${fieldNameFirst} är inte giltig, till exempel namn@exempel.se`;
     }
 
-    // Skapa span och lägg den direkt efter label
-    const span = document.createElement("span");
-    span.className = "error-message";
-    span.textContent = message;
-    label.insertAdjacentElement("afterend", span);
+    return "";
+}
+
+function validateRequired(value, fieldName) {
+    console.log("validateName: " + value + ", " + fieldName);
+    // Ta bort mellanslag, tab mm
+    const titel = value.trim();
+
+    if (titel.length === 0) {
+        return `Du behöver fylla i ${fieldName}`;
+    }
+
+    return "";
+}
+// Meddelandet är frivilligt, max 200 tecken
+function validateMessage(value, fieldName) {
+    const maxLength = 200;
+    const message = value.trim();
+
+    if (message.length > maxLength) {
+        return `Ditt ${fieldName} får vara högst ${maxLength} tecken (nu ${message.length})`;
+    }
+
+    return "";
 }
