@@ -1,37 +1,50 @@
-// Steg 1: Hämta tabellen och spara den i en variabel
+// Räkna ut summor och hantera tabellen
+// Jag har tagit höjd för om tabbellen får färre eller fler rader 
+// eller om kolumer tas bort eller läggs till så länge dessa finns, Pris Antal Summa.
+
+// Hämta pricetable tabellen och spara i en constant
 const pricetable = document.getElementById("pricetable");
 console.log("pricetable", pricetable);
 
-// Steg 2: Lägg till kolumnrubriken "Summa"
+// Lägg till header-rubriken "Summa"
 const headerRow = pricetable.querySelector("thead tr");
 const sumTextHeader = document.createElement("th");
 sumTextHeader.textContent = "Summa";
 headerRow.appendChild(sumTextHeader);
 
-// Steg 3: Lägg till en tom summacell på varje produktrad
-const productRows = pricetable.querySelectorAll("tbody tr");
+// Lägg till cell med summan för varje produktrad
+const productRows = pricetable.querySelectorAll("tbody tr"); // Hämta alla rader i tbody
 
 for (let i = 0; i < productRows.length; i++) {
     const sumProductRawCell = document.createElement("td");
     productRows[i].appendChild(sumProductRawCell);
 }
 
-// Steg 4: Skapa summeringsraden (sumrow)
+// Skapa raden totalsummor (sumrow)
 const totalSumRow = document.createElement("tr");
 totalSumRow.id = "sumrow";
 
-// Kolla hur många kolumner som finns
+// Kolla hur många kolumner som finns (mer generell) ...
 const columnCount = headerRow.children.length;
-
 for (let i = 0; i < columnCount; i++) {
     const totalSumRowCell = document.createElement("td");
     totalSumRow.appendChild(totalSumRowCell);
 }
-
+// ... för att appenda rätt antal celler till tabellen
 pricetable.querySelector("tbody").appendChild(totalSumRow);
 
-// Gör om en rubriktext till ett klassnamn, till exempel "Varumärke" -> "varumarke"
-function makeClassName(text) {
+
+// Låt alla celler i tbody få ett classnamn för att enkare hitta i domen.
+// Hämta namnen från headern (headerRow)
+function addColumnClasses(row) {
+    for (let i = 0; i < headerRow.children.length; i++) {
+        const className = utilityFirstClassName(headerRow.children[i].textContent);
+        row.children[i].classList.add(className);
+    }
+}
+
+// Gör om till "utility first" namnstandard
+function utilityFirstClassName(text) {
     let result = text.toLowerCase();
     result = result.replaceAll(" ", "-");
     result = result.replaceAll("å", "a");
@@ -40,62 +53,50 @@ function makeClassName(text) {
     return result;
 }
 
-// Sätt klass på varje cell i en rad, utifrån rubriken i samma kolumn
-function addColumnClasses(row) {
-    for (let i = 0; i < headerRow.children.length; i++) {
-        const className = makeClassName(headerRow.children[i].textContent);
-        row.children[i].classList.add(className);
-    }
-}
-
-// Alla celler finns nu, så vi kan sätta klasserna på produktraderna och sumrow
+// När alla celler finns sätt classer på produktraderna och sumrow
 for (let i = 0; i < productRows.length; i++) {
     addColumnClasses(productRows[i]);
 }
 addColumnClasses(totalSumRow);
 
-// Steg 5: Skapa knappen "Beräkna pris" och lägg den efter tabellen
+// Skapa knappen enligt uppgiften
 const calculateButton = document.createElement("button");
 calculateButton.textContent = "Beräkna pris";
 calculateButton.className = "btn btn-primary";
-
+// Lägg knappen efter tabellen
 pricetable.parentNode.insertBefore(calculateButton, pricetable.nextSibling);
 
-// Steg 6: Beräkningen (görs i delar)
+// Summera pris och antal 
 function calculatePrice() {
-    // Del 4: Totaler som börjar på 0 varje gång vi räknar
+    // Defaultvärden
     let totalQuantity = 0;
     let totalSum = 0;
 
-    // Del 3: Gå igenom alla produktrader och räkna ut radens summa
     for (let i = 0; i < productRows.length; i++) {
         const row = productRows[i];
 
-        // Hämta texten i Pris-cellen och gör till tal
-        const price = Number(row.querySelector(".pris").textContent);
-        // Hämta värdet i input i Antal-cellen och gör till tal
-        let quantity = Number(row.querySelector(".antal input").value);
+        // Gör om stängenar till nummer
+        const price = Number(row.querySelector(".pris").textContent); // const för att det redan finns i markup
+        let quantity = Number(row.querySelector(".antal input").value); // let för att det hämtas från input och kan ändras
 
-        // Om användaren skrev något som inte är ett tal räknar vi det som 0
+        // Lite enkel validering. Om man skriver t.ex x i input ändras det till 0
         if (Number.isNaN(quantity)) {
             quantity = 0;
         }
 
-        // Räkna ut radens summa
+        // Radens summa
         const rowSum = price * quantity;
-
-        // Skriv summan i radens Summa-cell
         row.querySelector(".summa").textContent = rowSum;
 
-        // Del 4: Lägg till radens värden i totalerna
+        // räkna ut totalsumman och totalantalet
         totalQuantity = totalQuantity + quantity;
         totalSum = totalSum + rowSum;
     }
 
-    // Del 4: Skriv totalerna i sumrow
+    // Tilldela totalantal och totalsumma till sumrow
     totalSumRow.querySelector(".antal").textContent = totalQuantity;
     totalSumRow.querySelector(".summa").textContent = totalSum;
 }
 
-// Steg 7 (tillfälligt redan nu, så att vi kan testa): koppla knappen till funktionen
-calculateButton.addEventListener("click", calculatePrice);
+// Koppla knappen till funktionen
+calculateButton.addEventListener("click", calculatePrice); 
