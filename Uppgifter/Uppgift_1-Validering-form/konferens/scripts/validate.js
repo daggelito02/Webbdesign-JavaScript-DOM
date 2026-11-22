@@ -1,6 +1,6 @@
-/* Validera formulär */
+// Validera formulär
 
-var conferenceRegForm = document.getElementById("registration_form");
+const conferenceRegForm = document.getElementById("registration_form");
 conferenceRegForm.addEventListener("submit", validate, false);
 
 function validate(e) {
@@ -9,7 +9,7 @@ function validate(e) {
     const validateFields = [
         { id: "field_firstname", name: "förnamn",  validate: validateName },
         { id: "field_lastname",  name: "efternamn", validate: validateName },
-        { id: "field_organisation", name: "organisationsnamn", validate: validateName },
+        { id: "field_organisation", name: "organisationsnamn", validate: validateRequired },
         { id: "field_email", name: "epostadress", validate: validateEmail },
     ];
 
@@ -48,7 +48,6 @@ function validate(e) {
         const message = txt1 + txt2
         e.preventDefault();
         alert(message + "\n\n" + messageList.join("\n"));
-        console.log("Fokus på första elementet med fel: " + setFocusFirstElement);
         setFocusFirstElement.focus();
     }
 }
@@ -58,7 +57,7 @@ function validateName(value, fieldName) {
     // Ta bort mellanslag, tab mm
     const name = value.trim();
 
-    // Ändra första bokstaven till stor om ordert kommer först i meningen
+    // Ändra första bokstaven till stor om ordet kommer först i meningen
     const fieldNameFirst = fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
 
     if (name.length === 0) {
@@ -68,10 +67,10 @@ function validateName(value, fieldName) {
     if (name.length < 2) {
         return `${fieldNameFirst} måste ha minst två bokstäver`;
     }
-    // Hittade denna regex på https://stackoverflow.com/questions/12018245/regex-to-allow-only-letters-a-z-and-space
-    // Godkänner både stora och små bokstäver och även ÅÄÖåäö
-    if (!/^[A-Za-zÅÄÖåäö]+$/.test(name)) { 
-        return `${fieldNameFirst} får bara innehålla bokstäverna A–Ö`;
+    // Hittade denna regex på stackoverflow
+    // Godkänner både stora, små bokstäver, ÅÄÖåäö, mellanslag och bindestreck
+    if (!/^[A-Za-zÅÄÖåäö -]+$/.test(name)) {
+        return `${fieldNameFirst} får bara innehålla bokstäver, mellanslag och bindestreck`;
     }
 
     return "";
@@ -112,7 +111,8 @@ function validateRequired(value, fieldName) {
 // Meddelandet är frivilligt, max 200 tecken
 function validateMessage(value, fieldName) {
     const maxLength = 200;
-    const message = value.trim();
+    // Räkna alla tecken som skrivits, även mellanslag i början och slutet
+    const message = value;
 
     if (message.length > maxLength) {
         return `Ditt ${fieldName} får vara högst ${maxLength} tecken (nu ${message.length})`;

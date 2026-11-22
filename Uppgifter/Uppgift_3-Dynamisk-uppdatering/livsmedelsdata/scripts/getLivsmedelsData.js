@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.querySelector("#search-table").style.display = "none";
 });
 
-// Hämta form och tabell elementen
+// Sökning av livsmedel
+
+// Hämta form och tabellelementen
 const searchForm = document.querySelector("form");
 const searchWord = document.querySelector("#search-word");
 const searchTable = document.querySelector("#search-table");
