@@ -4,51 +4,68 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.querySelector("#search-table").style.display = "none";
 });
 
-// Steg 1: Hämta elementen vi behöver
+// Hämta form och tabell elementen
 const searchForm = document.querySelector("form");
 const searchWord = document.querySelector("#search-word");
 const searchTable = document.querySelector("#search-table");
 const tableBody = searchTable.querySelector("tbody");
 
-console.log(searchForm, searchWord, searchTable, tableBody);
-
-// Steg 3: Hämta livsmedel från webbtjänsten
+// Hämta data med fetch från webservisen
 async function getFoodData(foodName) {
     try {
-        // Bygg upp adressen, till exempel ...getlivsmedel.php?namn=bacon
+        // Sätt ihop sökordet med parametren och gör den URL encodad.
         const params = new URLSearchParams({ namn: foodName });
         const url = `https://webservice.informatik.umu.se/webservice_livsmedel/getlivsmedel.php?${params}`;
 
-        // Vänta på att fetch-anropet ska slutföras
+        // Gör en fetch och vänta på svaret
         const response = await fetch(url);
 
-        // Kontrollera om anropet lyckades
+        // Kollar svaret om ok
         if (!response.ok) {
             throw new Error("Nätverksfel: " + response.status);
         }
 
-        // Vänta på att JSON-parsningen ska slutföras
+        // Tar hand om svaret och gör om till ett objekt
         const foodData = await response.json();
 
-        // Visa resultatet
         showFoodData(foodData);
 
     } catch (error) {
-        // Hantera fel
+        // Skriv ut vad som är fel för lättare felsökning
         console.error("Fel vid hämtning:", error);
 
-        // Ta bort gamla resultat och göm tabellen, så att inget föråldrat visas
+        // Nollställer tabellen och gömmer den vid fel
         tableBody.textContent = "";
         searchTable.style.display = "none";
     }
 }
 
-// Steg 4: Skapa en tabellrad av ett livsmedel
+// Visa sökresultatet i tabellen
+function showFoodData(foodData) {
+    const foods = foodData.livsmedel;
+
+    // Nollställ tabellen för varje ny sökning
+    tableBody.textContent = "";
+
+    // Lägg till en rad för varje livsmedel i tabellen
+    for (let i = 0; i < foods.length; i++) {
+        const row = createFoodRow(foods[i]);
+        tableBody.appendChild(row);
+    }
+
+    // Visa resultatet om sökningen gav någon träff, annars göm tabellen
+    if (foods.length > 0) {
+        searchTable.style.display = "";
+    } else {
+        searchTable.style.display = "none";
+    }
+}
+
+// Skapa alla celler till raden med värdena från fetch svaret
 function createFoodRow(food) {
     const row = document.createElement("tr");
 
-    // Värdena läggs i samma ordning som kolumnerna i tabellen,
-    // inte i den ordning som de kommer från webbtjänsten
+    // Skapa en array och arrangera värdena i samma ordning som cellerna i tabellen
     const values = [food.namn, food.energi, food.kolhydrater, food.protein, food.fett];
 
     for (let i = 0; i < values.length; i++) {
@@ -60,32 +77,11 @@ function createFoodRow(food) {
     return row;
 }
 
-// Steg 5: Visa livsmedlen i tabellen
-function showFoodData(foodData) {
-    const foods = foodData.livsmedel;
-
-    // Ta bort resultatet från förra sökningen
-    tableBody.textContent = "";
-
-    // Skapa en rad för varje livsmedel och lägg i tbody
-    for (let i = 0; i < foods.length; i++) {
-        const row = createFoodRow(foods[i]);
-        tableBody.appendChild(row);
-    }
-
-    // Steg 6: Visa tabellen om det finns träffar, annars göm den
-    if (foods.length > 0) {
-        searchTable.style.display = "";
-    } else {
-        searchTable.style.display = "none";
-    }
-}
-
-// Steg 2: Lyssna på när formuläret skickas (klick på Sök eller Enter)
+// Fånga sökordet och hämta data från webservicen
+// Använder submit för att även trigga enterknappen
 searchForm.addEventListener("submit", function (event) {
-    event.preventDefault(); // Stoppa att sidan laddas om
+    event.preventDefault();
     const searchWordValue = searchWord.value;
-    console.log("Sökord:", searchWordValue);
 
     getFoodData(searchWordValue);
 });
