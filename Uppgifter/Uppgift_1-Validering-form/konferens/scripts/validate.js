@@ -1,4 +1,4 @@
-// Validera formulär 
+// Validera formulär
 // Jag la till lite extra validering till uppgiften för att lära mig.
 // Den extra valideringen kollar att förnamn och efternamn bara innehåller
 // bokstäver, mellanslag och bindestreck samt är minst 2 tecken långa.
@@ -17,7 +17,7 @@ function validate(e) {
     ];
 
     // Om användaren har valt ”Föreläsning” eller ”Seminarium” som presentationstyp
-    // måste även fältet ”Titel på föreläsning/seminarium” vara ifyllt. 
+    // måste även fältet ”Titel på föreläsning/seminarium” vara ifyllt.
     // Lägg till titel-valideringen till listan validateFields.
     const presentationType = document.querySelector('input[name="pres_type"]:checked').value;
     if (presentationType === "lecture" || presentationType === "seminar") {
@@ -45,7 +45,7 @@ function validate(e) {
         }
     }
     // Om valideringsfel, visa felet med alert.
-    if (messageList.length > 0) { 
+    if (messageList.length > 0) {
         e.preventDefault();
         const txt1 = "Innan du kan skicka konferensanmälan behöver ";
         const txt2 = "du rätta till följande fel. Se informationen nedan:";
@@ -71,9 +71,9 @@ function validateName(value, fieldName) {
         return `${fieldNameFirst} måste ha minst två bokstäver`;
     }
 
-    // Ville testa att validera lite exta med regex även om det inte var med i kravet.
-    // Kollar dom vanligaste latinska bokstäverna och bildesträck + mellanslag.
-    // Testead mig fram och prövade med https://regex101.com/ till detta :-)
+    // Ville testa att validera lite extra med regex även om det inte var med i kravet.
+    // Kollar dom vanligaste latinska bokstäverna och bindestreck + mellanslag.
+    // Testade mig fram och prövade med https://regex101.com/ till detta :-)
     if (!/^[a-zA-ZÀ-ÿ -]+$/.test(name)) {
         return `${fieldNameFirst} får bara innehålla bokstäver, mellanslag och bindestreck`;
     }
@@ -105,14 +105,15 @@ function validateEmail(value, fieldName) {
 function validateRequired(value, fieldName) {
 
     // Ta bort mellanslag, tab mm
-    const titel = value.trim();
+    const text = value.trim();
 
-    if (titel.length === 0) {
+    if (text.length === 0) {
         return `Du behöver fylla i ${fieldName}`;
     }
 
     return "";
 }
+
 // Meddelandet är frivilligt, max 200 tecken
 function validateMessage(value, fieldName) {
     
