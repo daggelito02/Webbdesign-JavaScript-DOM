@@ -1,4 +1,7 @@
-// Validera formulär
+// Validera formulär 
+// Jag la till lite extra validering till uppgiften för att lära mig.
+// Den extra valideringen kollar att förnamn och efternamn bara innehåller
+// bokstäver, mellanslag och bindestreck samt är minst 2 tecken långa.
 
 const conferenceRegForm = document.getElementById("registration_form");
 conferenceRegForm.addEventListener("submit", validate, false);
@@ -9,13 +12,13 @@ function validate(e) {
     const validateFields = [
         { id: "field_firstname", name: "förnamn",  validate: validateName },
         { id: "field_lastname",  name: "efternamn", validate: validateName },
-        { id: "field_organisation", name: "organisationsnamn", validate: validateRequired },
         { id: "field_email", name: "epostadress", validate: validateEmail },
+        { id: "field_organisation", name: "organisationsnamn", validate: validateRequired },
     ];
 
     // Om användaren har valt ”Föreläsning” eller ”Seminarium” som presentationstyp
     // måste även fältet ”Titel på föreläsning/seminarium” vara ifyllt. 
-    // Lägg till det titel-valideringen till listan validateFields.
+    // Lägg till titel-valideringen till listan validateFields.
     const presentationType = document.querySelector('input[name="pres_type"]:checked').value;
     if (presentationType === "lecture" || presentationType === "seminar") {
         validateFields.push({ id: "field_pres_title", name: "titel på föreläsning/seminarium", validate: validateRequired });
@@ -26,29 +29,29 @@ function validate(e) {
 
     // Samla alla valideringsfel i en ny lista "messageList"
     const messageList = [];
-    let setFocusFirstElement= false;
+    let firstInvalidField = null;
 
-    // Lopa över felen
+    // Loopa över fälten
     for (const field of validateFields) {
         const inputElement = document.getElementById(field.id);
-        const validateMessage = field.validate(inputElement.value, field.name);
+        const errorMessage = field.validate(inputElement.value, field.name);
 
-        // Ge första valideringsfelet focus efter alert-medelandet.
-        if (validateMessage) {
-            messageList.push(validateMessage);
-            if (setFocusFirstElement === false) {
-                setFocusFirstElement = inputElement;
+        // Ge första valideringsfelet fokus efter alert-meddelandet.
+        if (errorMessage) {
+            messageList.push(errorMessage);
+            if (firstInvalidField === null) {
+                firstInvalidField = inputElement;
             }
         }
     }
-
-    if (messageList.length > 0) {
+    // Om valideringsfel, visa felet med alert.
+    if (messageList.length > 0) { 
+        e.preventDefault();
         const txt1 = "Innan du kan skicka konferensanmälan behöver ";
         const txt2 = "du rätta till följande fel. Se informationen nedan:";
-        const message = txt1 + txt2
-        e.preventDefault();
+        const message = txt1 + txt2; // två const för att inte få så lång rad
         alert(message + "\n\n" + messageList.join("\n"));
-        setFocusFirstElement.focus();
+        firstInvalidField.focus();
     }
 }
 
@@ -67,9 +70,11 @@ function validateName(value, fieldName) {
     if (name.length < 2) {
         return `${fieldNameFirst} måste ha minst två bokstäver`;
     }
-    // Hittade denna regex på stackoverflow
-    // Godkänner både stora, små bokstäver, ÅÄÖåäö, mellanslag och bindestreck
-    if (!/^[A-Za-zÅÄÖåäö -]+$/.test(name)) {
+
+    // Ville testa att validera lite exta med regex även om det inte var med i kravet.
+    // Kollar dom vanligaste latinska bokstäverna och bildesträck + mellanslag.
+    // Testead mig fram och prövade med https://regex101.com/ till detta :-)
+    if (!/^[a-zA-ZÀ-ÿ -]+$/.test(name)) {
         return `${fieldNameFirst} får bara innehålla bokstäver, mellanslag och bindestreck`;
     }
 
@@ -78,10 +83,10 @@ function validateName(value, fieldName) {
 
 function validateEmail(value, fieldName) {
 
-    // Ta bort mellanslag, tab mm
+    // Ta bort mellanslag (före och efter), tab mm
     const email = value.trim();
 
-    // Ändra första bokstaven till stor om ordert kommer först i meningen
+    // Ändra första bokstaven till stor om ordet kommer först i meningen
     const fieldNameFirst = fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
 
     if (email.length === 0) {
@@ -110,12 +115,11 @@ function validateRequired(value, fieldName) {
 }
 // Meddelandet är frivilligt, max 200 tecken
 function validateMessage(value, fieldName) {
+    
     const maxLength = 200;
     // Räkna alla tecken som skrivits, även mellanslag i början och slutet
-    const message = value;
-
-    if (message.length > maxLength) {
-        return `Ditt ${fieldName} får vara högst ${maxLength} tecken (nu ${message.length})`;
+    if (value.length > maxLength) {
+        return `Ditt ${fieldName} får högst vara ${maxLength} tecken (nu ${value.length})`;
     }
 
     return "";
