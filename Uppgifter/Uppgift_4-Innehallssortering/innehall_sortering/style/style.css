@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,900');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: #3c1818;
+}
+
+h1, h2, h3, h4 {
+	font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+h1 {
+	font-size: 5rem;
+	font-weight: 900;
+} 
+
+#secondarycontent {
+    position: sticky;
+    top: 0;
+    max-height: 100vh;
+    overflow-y: auto;
+    align-self: flex-start;
+}
+
+#secondarycontent ul {
+	padding: 0;
+	list-style: none;
+	--marker-size: 0.8rem;
+}
+
+#secondarycontent a {
+	color: #bb5846;
+	position: relative;
+	transition: .2s;
+}
+
+#secondarycontent a:hover {
+	color: tomato;
+	text-decoration: none;
+}
+
+#secondarycontent a.active {
+	font-weight: 500;
+	padding-left: calc(var(--marker-size) * 0.25);
+}
+
+#secondarycontent a::before {
+	content: "";
+	position: absolute;
+	height: var(--marker-size);
+	width: var(--marker-size);
+	left: -1em;
+	top: calc(50% - var(--marker-size) * 0.5);
+	background-color: #bc5847;
+	clip-path: circle(0% at 0 50%);
+	transition: .2s;
+}
+
+#secondarycontent a.active::before {
+	clip-path: circle(50% at 0 50%);
+}
+
+#secondarycontent a.active:hover{
+	padding-left: calc(var(--marker-size) * 0.35);
+}
+
+#secondarycontent a.active:hover::before {
+	clip-path: circle(50% at 10% 50%);
+}
