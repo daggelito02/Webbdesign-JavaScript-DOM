@@ -1,10 +1,9 @@
 // Räkna ut summor och hantera tabellen
-// Jag har tagit höjd för om tabbellen får färre eller fler rader 
-// eller om kolumer tas bort eller läggs till så länge dessa finns, Pris Antal Summa.
+// Jag har tagit höjd för om tabellen får färre eller fler rader
+// eller om kolumner tas bort eller läggs till så länge dessa finns, Pris Antal Summa.
 
-// Hämta pricetable tabellen och spara i en constant
+// Hämta pricetable tabellen och spara i en konstant
 const pricetable = document.getElementById("pricetable");
-console.log("pricetable", pricetable);
 
 // Lägg till header-rubriken "Summa"
 const headerRow = pricetable.querySelector("thead tr");
@@ -16,8 +15,8 @@ headerRow.appendChild(sumTextHeader);
 const productRows = pricetable.querySelectorAll("tbody tr"); // Hämta alla rader i tbody
 
 for (let i = 0; i < productRows.length; i++) {
-    const sumProductRawCell = document.createElement("td");
-    productRows[i].appendChild(sumProductRawCell);
+    const sumProductRowCell = document.createElement("td");
+    productRows[i].appendChild(sumProductRowCell);
 }
 
 // Skapa raden totalsummor (sumrow)
@@ -34,7 +33,7 @@ for (let i = 0; i < columnCount; i++) {
 pricetable.querySelector("tbody").appendChild(totalSumRow);
 
 
-// Låt alla celler i tbody få ett classnamn för att enkare hitta i domen.
+// Låt alla celler i tbody få ett classnamn för att enklare hitta i domen.
 // Hämta namnen från headern (headerRow)
 function addColumnClasses(row) {
     for (let i = 0; i < headerRow.children.length; i++) {
@@ -53,7 +52,7 @@ function utilityFirstClassName(text) {
     return result;
 }
 
-// När alla celler finns sätt classer på produktraderna och sumrow
+// När alla celler finns sätt klasser på produktraderna och sumrow
 for (let i = 0; i < productRows.length; i++) {
     addColumnClasses(productRows[i]);
 }
@@ -66,7 +65,7 @@ calculateButton.className = "btn btn-primary";
 // Lägg knappen efter tabellen
 pricetable.parentNode.insertBefore(calculateButton, pricetable.nextSibling);
 
-// Summera pris och antal 
+// Summera pris och antal
 function calculatePrice() {
     // Defaultvärden
     let totalQuantity = 0;
@@ -75,11 +74,11 @@ function calculatePrice() {
     for (let i = 0; i < productRows.length; i++) {
         const row = productRows[i];
 
-        // Gör om stängenar till nummer
-        const price = Number(row.querySelector(".pris").textContent); // const för att det redan finns i markup
-        let quantity = Number(row.querySelector(".antal input").value); // let för att det hämtas från input och kan ändras
+        // Gör om strängar till nummer
+        const price = Number(row.querySelector(".pris").textContent); // const för att den inte kommer att ändras
+        let quantity = Number(row.querySelector(".antal input").value); // let för att värdet kan ändras
 
-        // Lite enkel validering. Om man skriver t.ex x i input ändras det till 0
+        // Lite enkel validering. Om man skriver t.ex x i input "räknas det som 0"
         if (Number.isNaN(quantity)) {
             quantity = 0;
         }
@@ -99,4 +98,4 @@ function calculatePrice() {
 }
 
 // Koppla knappen till funktionen
-calculateButton.addEventListener("click", calculatePrice); 
+calculateButton.addEventListener("click", calculatePrice);
