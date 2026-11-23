@@ -12,7 +12,7 @@ const searchWord = document.querySelector("#search-word");
 const searchTable = document.querySelector("#search-table");
 const tableBody = searchTable.querySelector("tbody");
 
-// Hämta data med fetch från webservisen
+// Hämta data med fetch från webservicen
 async function getFoodData(foodName) {
     try {
         // Sätt ihop sökordet med parametren och gör den URL encodad.
